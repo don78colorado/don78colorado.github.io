@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Champion Grid</title>
+<style>
+body { background-color: #0a0a0a; color: #ddd; font-family: Arial, sans-serif; margin: 30px; text-align: center; }
+h2 { color: #58a6ff; margin-bottom: 20px; }
+#champGrid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; justify-items: center; max-width: 1100px; margin: 0 auto; }
+.champ-tile { background-color: #1a1a1a; border-radius: 8px; overflow: hidden; width: 150px; transition: transform 0.15s, box-shadow 0.15s; cursor: pointer; }
+.champ-tile:hover { transform: scale(1.05); box-shadow: 0 0 10px #58a6ff88; }
+.champ-img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; }
+.champ-name { padding: 6px 0; font-size: 14px; color: #eee; background-color: #111; }
+.champ-roles { font-size: 12px; color: #aaa; background-color: #111; padding-bottom: 6px; }
+</style>
+</head>
+<body>
+<h2>Owned + Free Rotation Champions</h2>
+<div id="champGrid"></div>
+<script>
+const champions = [
+  {
+    "name": "Aatrox",
+    "roles": [
+      "Fighter"
+    ]
+  },
+  {
+    "name": "Ahri",
+    "roles": [
+      "Mage",
+      "Assassin"
+    ]
+  },
+  {
+    "name": "Alistar",
+    "roles": [
+      "Tank",
+      "Support"
+    ]
+  },
+  {
+    "name": "Amumu",
+    "roles": [
+      "Tank",
+      "Support"
+    ]
+  },
+  {
+    "name": "Anivia",
+    "roles": [
+      "Mage"
+    ]
+  },
+  {
+    "name": "Annie",
+    "roles": [
+      "Mage",
+      "Support"
+    ]
+  },
+  {
+    "name": "Ashe",
+    "roles": [
+      "Marksman",
+      "Support"
+    ]
+  },
+  {
+    "name": "Blitzcrank",
+    "roles": [
+      "Tank",
+      "Support"
+    ]
+  },
+  {
+    "name": "Brand",
+    "roles": [
+      "Mage",
+      "Support"
+    ]
+  },
+  {
+    "name": "Braum",
+    "roles": [
+      "Tank",
+      "Support"
+    ]
+  },
+  {
+    "name": "Caitlyn",
+    "roles": [
+      "Marksman"
+    ]
+  },
+  {
+    "name": "Cho'Gath",
+    "roles": [
+      "Tank",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Darius",
+    "roles": [
+      "Fighter",
+      "Tank"
+    ]
+  },
+  {
+    "name": "Dr. Mundo",
+    "roles": [
+      "Tank",
+      "Fighter"
+    ]
+  },
+  {
+    "name": "Ezreal",
+    "roles": [
+      "Marksman",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Fiddlesticks",
+    "roles": [
+      "Mage",
+      "Support"
+    ]
+  },
+  {
+    "name": "Fizz",
+    "roles": [
+      "Assassin",
+      "Fighter"
+    ]
+  },
+  {
+    "name": "Galio",
+    "roles": [
+      "Tank",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Garen",
+    "roles": [
+      "Fighter",
+      "Tank"
+    ]
+  },
+  {
+    "name": "Graves",
+    "roles": [
+      "Marksman"
+    ]
+  },
+  {
+    "name": "Hecarim",
+    "roles": [
+      "Fighter",
+      "Tank"
+    ]
+  },
+  {
+    "name": "Heimerdinger",
+    "roles": [
+      "Mage",
+      "Support"
+    ]
+  },
+  {
+    "name": "Janna",
+    "roles": [
+      "Support",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Jarvan IV",
+    "roles": [
+      "Fighter",
+      "Tank"
+    ]
+  },
+  {
+    "name": "Jax",
+    "roles": [
+      "Fighter"
+    ]
+  },
+  {
+    "name": "Jhin",
+    "roles": [
+      "Marksman",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Jinx",
+    "roles": [
+      "Marksman"
+    ]
+  },
+  {
+    "name": "Kai'Sa",
+    "roles": [
+      "Marksman",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Kalista",
+    "roles": [
+      "Marksman"
+    ]
+  },
+  {
+    "name": "Karma",
+    "roles": [
+      "Mage",
+      "Support"
+    ]
+  },
+  {
+    "name": "Karthus",
+    "roles": [
+      "Mage"
+    ]
+  },
+  {
+    "name": "Kindred",
+    "roles": [
+      "Marksman"
+    ]
+  },
+  {
+    "name": "Lee Sin",
+    "roles": [
+      "Fighter",
+      "Assassin"
+    ]
+  },
+  {
+    "name": "Leona",
+    "roles": [
+      "Tank",
+      "Support"
+    ]
+  },
+  {
+    "name": "Lillia",
+    "roles": [
+      "Fighter",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Lissandra",
+    "roles": [
+      "Mage"
+    ]
+  },
+  {
+    "name": "Lucian",
+    "roles": [
+      "Marksman",
+      "Assassin"
+    ]
+  },
+  {
+    "name": "Lulu",
+    "roles": [
+      "Support",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Lux",
+    "roles": [
+      "Mage",
+      "Support"
+    ]
+  },
+  {
+    "name": "Malphite",
+    "roles": [
+      "Tank",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Maokai",
+    "roles": [
+      "Tank",
+      "Support"
+    ]
+  },
+  {
+    "name": "Master Yi",
+    "roles": [
+      "Assassin",
+      "Fighter"
+    ]
+  },
+  {
+    "name": "Mel",
+    "roles": [
+      "Unknown"
+    ]
+  },
+  {
+    "name": "Milio",
+    "roles": [
+      "Support",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Miss Fortune",
+    "roles": [
+      "Marksman",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Mordekaiser",
+    "roles": [
+      "Fighter",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Morgana",
+    "roles": [
+      "Mage",
+      "Support"
+    ]
+  },
+  {
+    "name": "Nami",
+    "roles": [
+      "Support",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Nasus",
+    "roles": [
+      "Fighter",
+      "Tank"
+    ]
+  },
+  {
+    "name": "Nautilus",
+    "roles": [
+      "Tank",
+      "Support"
+    ]
+  },
+  {
+    "name": "Neeko",
+    "roles": [
+      "Mage",
+      "Support"
+    ]
+  },
+  {
+    "name": "Nocturne",
+    "roles": [
+      "Fighter",
+      "Assassin"
+    ]
+  },
+  {
+    "name": "Nunu & Willump",
+    "roles": [
+      "Tank",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Pantheon",
+    "roles": [
+      "Fighter",
+      "Assassin"
+    ]
+  },
+  {
+    "name": "Poppy",
+    "roles": [
+      "Tank",
+      "Fighter"
+    ]
+  },
+  {
+    "name": "Pyke",
+    "roles": [
+      "Support",
+      "Assassin"
+    ]
+  },
+  {
+    "name": "Quinn",
+    "roles": [
+      "Marksman",
+      "Assassin"
+    ]
+  },
+  {
+    "name": "Rammus",
+    "roles": [
+      "Tank"
+    ]
+  },
+  {
+    "name": "Renekton",
+    "roles": [
+      "Fighter",
+      "Tank"
+    ]
+  },
+  {
+    "name": "Ryze",
+    "roles": [
+      "Mage"
+    ]
+  },
+  {
+    "name": "Samira",
+    "roles": [
+      "Marksman",
+      "Assassin"
+    ]
+  },
+  {
+    "name": "Sejuani",
+    "roles": [
+      "Tank"
+    ]
+  },
+  {
+    "name": "Senna",
+    "roles": [
+      "Support",
+      "Marksman"
+    ]
+  },
+  {
+    "name": "Seraphine",
+    "roles": [
+      "Support",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Sett",
+    "roles": [
+      "Fighter",
+      "Tank"
+    ]
+  },
+  {
+    "name": "Shyvana",
+    "roles": [
+      "Fighter",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Singed",
+    "roles": [
+      "Tank",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Sivir",
+    "roles": [
+      "Marksman"
+    ]
+  },
+  {
+    "name": "Skarner",
+    "roles": [
+      "Tank",
+      "Fighter"
+    ]
+  },
+  {
+    "name": "Smolder",
+    "roles": [
+      "Marksman",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Sona",
+    "roles": [
+      "Support",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Soraka",
+    "roles": [
+      "Support",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Swain",
+    "roles": [
+      "Mage",
+      "Support"
+    ]
+  },
+  {
+    "name": "Taliyah",
+    "roles": [
+      "Mage",
+      "Support"
+    ]
+  },
+  {
+    "name": "Teemo",
+    "roles": [
+      "Marksman",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Thresh",
+    "roles": [
+      "Support",
+      "Tank"
+    ]
+  },
+  {
+    "name": "Tristana",
+    "roles": [
+      "Marksman",
+      "Assassin"
+    ]
+  },
+  {
+    "name": "Trundle",
+    "roles": [
+      "Fighter",
+      "Tank"
+    ]
+  },
+  {
+    "name": "Twisted Fate",
+    "roles": [
+      "Mage",
+      "Marksman"
+    ]
+  },
+  {
+    "name": "Twitch",
+    "roles": [
+      "Marksman",
+      "Assassin"
+    ]
+  },
+  {
+    "name": "Udyr",
+    "roles": [
+      "Fighter",
+      "Tank"
+    ]
+  },
+  {
+    "name": "Varus",
+    "roles": [
+      "Marksman",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Vayne",
+    "roles": [
+      "Marksman",
+      "Assassin"
+    ]
+  },
+  {
+    "name": "Veigar",
+    "roles": [
+      "Mage"
+    ]
+  },
+  {
+    "name": "Vel'Koz",
+    "roles": [
+      "Mage",
+      "Support"
+    ]
+  },
+  {
+    "name": "Vex",
+    "roles": [
+      "Mage"
+    ]
+  },
+  {
+    "name": "Viktor",
+    "roles": [
+      "Mage"
+    ]
+  },
+  {
+    "name": "Vladimir",
+    "roles": [
+      "Mage",
+      "Fighter"
+    ]
+  },
+  {
+    "name": "Volibear",
+    "roles": [
+      "Fighter",
+      "Tank"
+    ]
+  },
+  {
+    "name": "Warwick",
+    "roles": [
+      "Fighter",
+      "Tank"
+    ]
+  },
+  {
+    "name": "Xerath",
+    "roles": [
+      "Mage",
+      "Support"
+    ]
+  },
+  {
+    "name": "Xin Zhao",
+    "roles": [
+      "Fighter",
+      "Tank"
+    ]
+  },
+  {
+    "name": "Yasuo",
+    "roles": [
+      "Fighter",
+      "Assassin"
+    ]
+  },
+  {
+    "name": "Yunara",
+    "roles": [
+      "Unknown"
+    ]
+  },
+  {
+    "name": "Yuumi",
+    "roles": [
+      "Support",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Zaahen",
+    "roles": [
+      "Unknown"
+    ]
+  },
+  {
+    "name": "Zed",
+    "roles": [
+      "Assassin"
+    ]
+  },
+  {
+    "name": "Ziggs",
+    "roles": [
+      "Mage"
+    ]
+  },
+  {
+    "name": "Zilean",
+    "roles": [
+      "Support",
+      "Mage"
+    ]
+  },
+  {
+    "name": "Zyra",
+    "roles": [
+      "Mage",
+      "Support"
+    ]
+  }
+];
+
+const champImage = name =>
+  `https://ddragon.leagueoflegends.com/cdn/14.21.1/img/champion/${name.replace(/\s+/g, '').replace(/'/g, '')}.png`;
+const champLink = name =>
+  `https://mobalytics.gg/lol/champions/${name.toLowerCase().replace(/\s+/g, '')}/guide/`;
+const grid = document.getElementById("champGrid");
+
+champions.forEach(champ => {
+  const tile = document.createElement("div");
+  tile.className = "champ-tile";
+  tile.onclick = () => window.open(champLink(champ.name), "_blank");
+  const img = document.createElement("img");
+  img.className = "champ-img";
+  img.src = champImage(champ.name);
+  img.alt = champ.name;
+  const name = document.createElement("div");
+  name.className = "champ-name";
+  name.textContent = champ.name;
+  const roles = document.createElement("div");
+  roles.className = "champ-roles";
+  roles.textContent = champ.roles.join(", ");
+  tile.appendChild(img);
+  tile.appendChild(name);
+  tile.appendChild(roles);
+  grid.appendChild(tile);
+});
+</script>
+</body>
+</html>
