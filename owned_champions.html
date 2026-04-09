@@ -101,6 +101,13 @@ const champions = [
     ]
   },
   {
+    "name": "Corki",
+    "roles": [
+      "Marksman",
+      "Mage"
+    ]
+  },
+  {
     "name": "Darius",
     "roles": [
       "Fighter",
@@ -112,6 +119,13 @@ const champions = [
     "roles": [
       "Tank",
       "Fighter"
+    ]
+  },
+  {
+    "name": "Ekko",
+    "roles": [
+      "Assassin",
+      "Mage"
     ]
   },
   {
@@ -210,12 +224,6 @@ const champions = [
     ]
   },
   {
-    "name": "Kalista",
-    "roles": [
-      "Marksman"
-    ]
-  },
-  {
     "name": "Karma",
     "roles": [
       "Mage",
@@ -229,9 +237,30 @@ const champions = [
     ]
   },
   {
+    "name": "Kayle",
+    "roles": [
+      "Mage",
+      "Marksman"
+    ]
+  },
+  {
     "name": "Kindred",
     "roles": [
       "Marksman"
+    ]
+  },
+  {
+    "name": "Kog'Maw",
+    "roles": [
+      "Marksman",
+      "Mage"
+    ]
+  },
+  {
+    "name": "LeBlanc",
+    "roles": [
+      "Assassin",
+      "Mage"
     ]
   },
   {
@@ -246,13 +275,6 @@ const champions = [
     "roles": [
       "Tank",
       "Support"
-    ]
-  },
-  {
-    "name": "Lillia",
-    "roles": [
-      "Fighter",
-      "Mage"
     ]
   },
   {
@@ -366,6 +388,13 @@ const champions = [
     ]
   },
   {
+    "name": "Nidalee",
+    "roles": [
+      "Assassin",
+      "Mage"
+    ]
+  },
+  {
     "name": "Nocturne",
     "roles": [
       "Fighter",
@@ -401,16 +430,16 @@ const champions = [
     ]
   },
   {
-    "name": "Quinn",
-    "roles": [
-      "Marksman",
-      "Assassin"
-    ]
-  },
-  {
     "name": "Rammus",
     "roles": [
       "Tank"
+    ]
+  },
+  {
+    "name": "Rell",
+    "roles": [
+      "Tank",
+      "Support"
     ]
   },
   {
@@ -481,13 +510,6 @@ const champions = [
     ]
   },
   {
-    "name": "Skarner",
-    "roles": [
-      "Tank",
-      "Fighter"
-    ]
-  },
-  {
     "name": "Smolder",
     "roles": [
       "Marksman",
@@ -506,13 +528,6 @@ const champions = [
     "roles": [
       "Support",
       "Mage"
-    ]
-  },
-  {
-    "name": "Swain",
-    "roles": [
-      "Mage",
-      "Support"
     ]
   },
   {
@@ -605,6 +620,13 @@ const champions = [
     ]
   },
   {
+    "name": "Viego",
+    "roles": [
+      "Fighter",
+      "Assassin"
+    ]
+  },
+  {
     "name": "Viktor",
     "roles": [
       "Mage"
@@ -632,6 +654,12 @@ const champions = [
     ]
   },
   {
+    "name": "Xayah",
+    "roles": [
+      "Marksman"
+    ]
+  },
+  {
     "name": "Xerath",
     "roles": [
       "Mage",
@@ -650,6 +678,13 @@ const champions = [
     "roles": [
       "Fighter",
       "Assassin"
+    ]
+  },
+  {
+    "name": "Yorick",
+    "roles": [
+      "Fighter",
+      "Tank"
     ]
   },
   {
@@ -702,7 +737,7 @@ const champions = [
 const champImage = name =>
   `https://ddragon.leagueoflegends.com/cdn/14.21.1/img/champion/${name.replace(/\s+/g, '').replace(/'/g, '')}.png`;
 const champLink = name =>
-  `https://mobalytics.gg/lol/champions/${name.toLowerCase().replace(/\s+/g, '')}/guide/`;
+  `https://www.metasrc.com/lol/aram/build/${name.toLowerCase().replace(/\s+/g, '')}`;
 const grid = document.getElementById("champGrid");
 
 champions.forEach(champ => {
